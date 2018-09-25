@@ -21,7 +21,6 @@ class Table:
         for card in cards:
             print(card)
 
-        input()
         return cards
 
 
