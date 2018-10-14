@@ -6,7 +6,7 @@ class Game:
     
     def __init__(self):
         self.table = Table(100)
-        self.players = [RandomPlayer(self.table, "Player one"), RandomPlayer(self.table, "Player two")]
+        self.players = [MemoryPlayer(0, self.table, "Player one"), MemoryPlayer(0, self.table, "Player two")]
         self.counter = 0
 
     def run(self):
@@ -17,10 +17,6 @@ class Game:
                     while p.play():
                         if not any(self.table.cards):
                             break
-                    common_items = list(set(self.table.cards).intersection(p.captured_cards))
-                    if common_items:
-                        print(common_items)
-                        input()
                 else:
                     break
 
