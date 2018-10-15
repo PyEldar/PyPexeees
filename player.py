@@ -1,5 +1,7 @@
 import random
-from collections import OrderedDict
+
+from memory import LimitedMemory
+
 
 class Player:
     """Parent class abstracting players"""
@@ -44,8 +46,7 @@ class MemoryPlayer(Player):
     """Player with specified memory size - 0 == infinite"""
     def __init__(self, memory_size, *args, **kwargs):
         super(MemoryPlayer, self).__init__(*args, **kwargs)
-        self.memory_size = memory_size
-        self.memory = OrderedDict()
+        self.memory = LimitedMemory(memory_size)
 
 
     def play(self):
@@ -85,7 +86,7 @@ class MemoryPlayer(Player):
     def save_card(self, position, card):
         """saves card to memory if it is not there yet"""
         if not card in self.memory.keys():
-            self.memory[position] = card.id
+            self.memory.set(position, card.id)
 
 
     def lookup_card(self, position):
