@@ -1,15 +1,26 @@
+from operator import attrgetter
+
 from player import RandomPlayer, MemoryPlayer
 from table import Table
 
 class Game:
     """Game class owning table and players"""
-    
+
     def __init__(self):
         self.table = Table(100)
-        self.players = [MemoryPlayer(0, self.table, "Player one"), MemoryPlayer(0, self.table, "Player two")]
+        self.players = [
+            MemoryPlayer(0, self.table, "Player one"),
+            MemoryPlayer(0, self.table, "Player two"),
+            MemoryPlayer(0, self.table, "Player three"),
+            MemoryPlayer(0, self.table, "Player four"),
+            MemoryPlayer(0, self.table, "Player fice"),
+            MemoryPlayer(0, self.table, "Player six"),
+            RandomPlayer(self.table, "Player seven")
+            ]
         self.counter = 0
 
     def run(self):
+        """Runs game loop as long as there are any cards on table"""
         input()
         while any(self.table.cards):
             for p in self.players:
@@ -24,10 +35,11 @@ class Game:
             self.counter += 1
 
         print("Game ended")
-        if len(self.players[0].captured_cards) > len(self.players[1].captured_cards):
-            print("Players 1 won .... " + str(len(self.players[0].captured_cards)) + "cards")
-        else: 
-            print("Players 2 won .... " + str(len(self.players[1].captured_cards)) + "cards")
+        winner = max(self.players, key=attrgetter('captured_cards.__len__'))
+        print("{name} won with {count} cards".format(
+            name=winner.name,
+            count=len(winner.captured_cards),
+            ))
 
         input()
         return
