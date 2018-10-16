@@ -1,121 +1,13 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-
-table200 = {
-    "Data": [
-        { "mem_size" : 1, "rounds" : 4875.7 },
-        { "mem_size" : 2, "rounds" : 3204 },
-        { "mem_size" : 3, "rounds" : 1883 },
-        { "mem_size" : 4, "rounds" : 1350.3 },
-        { "mem_size" : 5, "rounds" : 1079.5 },
-        { "mem_size" : 6, "rounds" : 910.6 },
-        { "mem_size" : 7, "rounds" : 767.3 },
-        { "mem_size" : 8, "rounds" : 623 },
-        { "mem_size" : 9, "rounds" : 547.7 },
-        { "mem_size" : 10, "rounds" : 532.1 },
-        { "mem_size" : 11, "rounds" : 436.2 },
-        { "mem_size" : 12, "rounds" : 420.6 },
-        { "mem_size" : 13, "rounds" : 386.2 },
-        { "mem_size" : 14, "rounds" : 338.2 },
-        { "mem_size" : 15, "rounds" : 315.2 },
-        { "mem_size" : 16, "rounds" : 327 },
-        { "mem_size" : 17, "rounds" : 283.9 },
-        { "mem_size" : 18, "rounds" : 248.9 },
-        { "mem_size" : 19, "rounds" : 231.9 },
-        { "mem_size" : 20, "rounds" : 228.3 },
-        { "mem_size" : 21, "rounds" : 215.8 },
-        { "mem_size" : 22, "rounds" : 217 },
-        { "mem_size" : 23, "rounds" : 201.6 },
-        { "mem_size" : 24, "rounds" : 198.6 },
-        { "mem_size" : 25, "rounds" : 177.8 },
-        { "mem_size" : 26, "rounds" : 183.3 },
-        { "mem_size" : 27, "rounds" : 159.7 },
-        { "mem_size" : 28, "rounds" : 163.5 },
-        { "mem_size" : 29, "rounds" : 160 },
-        { "mem_size" : 30, "rounds" : 151.5 },
-        { "mem_size" : 31, "rounds" : 148 },
-        { "mem_size" : 32, "rounds" : 136.1 },
-        { "mem_size" : 33, "rounds" : 131.1 },
-        { "mem_size" : 34, "rounds" : 137.2 },
-        { "mem_size" : 35, "rounds" : 128.8 },
-        { "mem_size" : 36, "rounds" : 130.5 },
-        { "mem_size" : 37, "rounds" : 132.7 },
-        { "mem_size" : 38, "rounds" : 119.1 },
-        { "mem_size" : 39, "rounds" : 117.7 },
-        { "mem_size" : 40, "rounds" : 114.1 },
-        { "mem_size" : 41, "rounds" : 118.1 },
-        { "mem_size" : 42, "rounds" : 110.5 },
-        { "mem_size" : 43, "rounds" : 111.1 },
-        { "mem_size" : 44, "rounds" : 100.5 },
-        { "mem_size" : 45, "rounds" : 102 },
-        { "mem_size" : 46, "rounds" : 100.9 },
-        { "mem_size" : 47, "rounds" : 99.3 },
-        { "mem_size" : 48, "rounds" : 94.5 },
-        { "mem_size" : 49, "rounds" : 95.9 },
-        { "mem_size" : 50, "rounds" : 94.6 }
-    ]
-}
-
-table500 = {
-    "Data": [
-        { "rounds" : 30142.9, "mem_size" : 1 },
-        { "rounds" : 20923.2, "mem_size" : 2 },
-        { "rounds" : 12528.8, "mem_size" : 3 },
-        { "rounds" : 8917.2, "mem_size" : 4 },
-        { "rounds" : 7131.2, "mem_size" : 5 },
-        { "rounds" : 5715.9, "mem_size" : 6 },
-        { "rounds" : 4892.5, "mem_size" : 7 },
-        { "rounds" : 4171.2, "mem_size" : 8 },
-        { "rounds" : 3401.5, "mem_size" : 9 },
-        { "rounds" : 3089, "mem_size" : 10 },
-        { "rounds" : 2880.6, "mem_size" : 11 },
-        { "rounds" : 2548.8, "mem_size" : 12 },
-        { "rounds" : 2339.6, "mem_size" : 13 },
-        { "rounds" : 2282.3, "mem_size" : 14 },
-        { "rounds" : 2046.2, "mem_size" : 15 },
-        { "rounds" : 1906.9, "mem_size" : 16 },
-        { "rounds" : 1797.8, "mem_size" : 17 },
-        { "rounds" : 1679.3, "mem_size" : 18 },
-        { "rounds" : 1609.8, "mem_size" : 19 },
-        { "rounds" : 1493.1, "mem_size" : 20 },
-        { "rounds" : 1475.8, "mem_size" : 21 },
-        { "rounds" : 1411.6, "mem_size" : 22 },
-        { "rounds" : 1349.1, "mem_size" : 23 },
-        { "rounds" : 1308.6, "mem_size" : 24 },
-        { "rounds" : 1156.1, "mem_size" : 25 },
-        { "rounds" : 1140.2, "mem_size" : 26 },
-        { "rounds" : 1148.6, "mem_size" : 27 },
-        { "rounds" : 1085.7, "mem_size" : 28 },
-        { "rounds" : 1024.8, "mem_size" : 29 },
-        { "rounds" : 1010.5, "mem_size" : 30 },
-        { "rounds" : 962.2, "mem_size" : 31 },
-        { "rounds" : 902.2, "mem_size" : 32 },
-        { "rounds" : 928.5, "mem_size" : 33 },
-        { "rounds" : 877.2, "mem_size" : 34 },
-        { "rounds" : 833.8, "mem_size" : 35 },
-        { "rounds" : 796.2, "mem_size" : 36 },
-        { "rounds" : 751.6, "mem_size" : 37 },
-        { "rounds" : 754.7, "mem_size" : 38 },
-        { "rounds" : 736.1, "mem_size" : 39 },
-        { "rounds" : 727.9, "mem_size" : 40 },
-        { "rounds" : 687.2, "mem_size" : 41 },
-        { "rounds" : 692.5, "mem_size" : 42 },
-        { "rounds" : 664.8, "mem_size" : 43 },
-        { "rounds" : 636.6, "mem_size" : 44 },
-        { "rounds" : 629.7, "mem_size" : 45 },
-        { "rounds" : 642.4, "mem_size" : 46 },
-        { "rounds" : 600.1, "mem_size" : 47 },
-        { "rounds" : 605.7, "mem_size" : 48 },
-        { "rounds" : 571.8, "mem_size" : 49 },
-        { "rounds" : 574.5, "mem_size" : 50 }
-    ]
-}
+from pymongo import MongoClient
 
 
+table100 = list(MongoClient().pexes.winners.find({"table_size": 100}, {"rounds": 1, "mem_size": 1}))
+table200 = list(MongoClient().pexes.winners.find({"table_size": 200}, {"rounds": 1, "mem_size": 1}))
 
-
-table200frame = pd.DataFrame(table200['Data'])
+table200frame = pd.DataFrame(table100)
 table200frame.plot(x='rounds', y='mem_size')
-table500frame = pd.DataFrame(table500['Data'])
+table500frame = pd.DataFrame(table200)
 table500frame.plot(x='rounds', y='mem_size')
 plt.show()

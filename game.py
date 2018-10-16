@@ -7,8 +7,9 @@ from table import Table
 class Game:
     """Game class owning table and players"""
 
-    def __init__(self):
-        self.table = Table(200)
+    def __init__(self, table_size=100):
+        self.table_size = table_size
+        self.table = Table(table_size)
         self.players = [
             MemoryPlayer(20, self.table, "Player one"),
             ]
@@ -69,10 +70,10 @@ class Game:
         for i in range(num_of_games):
             total_rounds = 0
             for j in range(samples_per_mem_size):
-                self.table = Table(200)
+                self.table = Table(self.table_size)
                 self.counter = 1
                 self.players = [MemoryPlayer(mem_size, self.table, "Player " + str(i) + str(j))]
                 total_rounds += self.run()["rounds"]
 
-            self.store_results({"rounds": total_rounds/samples_per_mem_size, "mem_size": mem_size})
+            self.store_results({"rounds": total_rounds/samples_per_mem_size, "mem_size": mem_size, "table_size": self.table_size})
             mem_size += 1
