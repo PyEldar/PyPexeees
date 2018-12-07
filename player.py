@@ -13,7 +13,7 @@ class Player:
 
     def play(self):
         """begins move"""
-        raise NotImplementedError("Must be implemented in subclass")
+        raise NotImplementedError("Must be implemented in a subclass")
 
     def __str__(self):
         return self.name
@@ -31,7 +31,7 @@ class RandomPlayer(Player):
         while (self.table.cards[first] is None or self.table.cards[second] is None) and any(self.table.cards):
             first, second = random.sample(range(0, len(self.table.cards)), 2)
 
-        #take cards from table
+        # take cards from table
         if self.table.cards[first].id == self.table.cards[second].id:
             self.captured_cards.append(self.table.cards[first].id)
             self.table.cards[first] = None
@@ -48,18 +48,17 @@ class MemoryPlayer(Player):
         super(MemoryPlayer, self).__init__(*args, **kwargs)
         self.memory = LimitedMemory(memory_size)
 
-
     def play(self):
         """Make move
         when first item is in memory use stored value to get the right card
         """
 
         first, second = self.check_memory()
-        #get first card which is not already taken or is not in your memory
+        # get first card which is not already taken or is not in your memory
         if first is None:
-            first = random.randint(0, len(self.table.cards) -1)
+            first = random.randint(0, len(self.table.cards) - 1)
             while (first in self.memory.keys() or self.table.cards[first] is None) and any(self.table.cards):
-                first = random.randint(0, len(self.table.cards) -1)
+                first = random.randint(0, len(self.table.cards) - 1)
 
         if second is None:
             second = self.lookup_card(first)
@@ -69,7 +68,7 @@ class MemoryPlayer(Player):
             while (self.table.cards[second] is None or first == second) and any(self.table.cards):
                 second = random.randint(0, len(self.table.cards) -1)
 
-        #take cards from table
+        # take cards from table
         if self.table.cards[first].id == self.table.cards[second].id:
             self.captured_cards.append(self.table.cards[first].id)
             self.table.cards[first] = None
@@ -82,12 +81,10 @@ class MemoryPlayer(Player):
 
         return False
 
-
     def save_card(self, position, card):
         """saves card to memory if it is not there yet"""
-        if not card in self.memory.keys():
+        if card not in self.memory.keys():
             self.memory.set(position, card.id)
-
 
     def lookup_card(self, position):
         """check for match in memory, return card index on positive"""
@@ -96,19 +93,17 @@ class MemoryPlayer(Player):
                 return key
         return None
 
-
     def check_memory(self):
         """checks memory if there are two identical cards returns indexes"""
         for value in self.memory.values():
             keys = self.get_keys_by_value(self.memory, value)
             if len(keys) > 1:
-                #check if card is still on table
+                # check if card is still on table
                 if self.table.cards[keys[0]]:
-                    #remove keys from memory
+                    # remove keys from memory
                     [self.memory.pop(key) for key in keys]
                     return keys
         return None, None
-
 
     def get_keys_by_value(self, source_dict, to_find):
         """Returns keys of *source_dict* with value *to_find*"""
