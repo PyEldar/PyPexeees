@@ -26,10 +26,13 @@ class RandomPlayer(Player):
         """Make move
         returns True on success
         """
+        first = random.randint(0, len(self.table.cards) - 1)
+        while self.table.cards[first] is None and any(self.table.cards):
+                first = random.randint(0, len(self.table.cards) - 1)
 
-        first, second = random.sample(range(0, len(self.table.cards)), 2)
-        while (self.table.cards[first] is None or self.table.cards[second] is None) and any(self.table.cards):
-            first, second = random.sample(range(0, len(self.table.cards)), 2)
+        second = random.randint(0, len(self.table.cards) - 1)
+        while (self.table.cards[second] is None or first == second) and any(self.table.cards):
+                second = random.randint(0, len(self.table.cards) - 1)
 
         # take cards from table
         if self.table.cards[first].id == self.table.cards[second].id:
@@ -64,9 +67,9 @@ class MemoryPlayer(Player):
             second = self.lookup_card(first)
 
         if second is None:
-            second = random.randint(0, len(self.table.cards) -1)
+            second = random.randint(0, len(self.table.cards) - 1)
             while (self.table.cards[second] is None or first == second) and any(self.table.cards):
-                second = random.randint(0, len(self.table.cards) -1)
+                second = random.randint(0, len(self.table.cards) - 1)
 
         # take cards from table
         if self.table.cards[first].id == self.table.cards[second].id:

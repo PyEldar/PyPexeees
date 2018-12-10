@@ -6,7 +6,7 @@ from table import Table
 
 
 class Game:
-    """Game class owning table and players"""
+    """Game class containing table and players"""
 
     def __init__(self, table_size=100):
         self.table_size = table_size
@@ -59,7 +59,7 @@ class Game:
         """Inserts dict to mongo"""
         self.mongodb.comparisions.insert_one(results)
 
-    def loop_run(self, num_of_games=50, start_mem_size=1, samples_per_mem_size=10):
+    def loop_run(self, num_of_games=50, start_mem_size=0, samples_per_mem_size=10):
         """Runs specified number of games - used for creating statistics"""
         mem_size = start_mem_size
         for i in range(num_of_games):

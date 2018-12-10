@@ -2,12 +2,16 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from pymongo import MongoClient
 
+data = list(MongoClient().pexes.comparisions.find({}, {
+        'random_player': 1,
+        'memory_player': 1,
+        'mem_size': 1
+    }))
 
-table100 = list(MongoClient().pexes.winners.find({"table_size": 100}, {"rounds": 1, "mem_size": 1}))
-table200 = list(MongoClient().pexes.winners.find({"table_size": 200}, {"rounds": 1, "mem_size": 1}))
-
-table200frame = pd.DataFrame(table100)
-table200frame.plot(x='rounds', y='mem_size')
-table500frame = pd.DataFrame(table200)
-table500frame.plot(x='rounds', y='mem_size')
+data_frame = pd.DataFrame(data)
+data_frame.plot(x='mem_size', y=['random_player', 'memory_player'], label=['Random player', 'Memory player'])
+plt.legend(loc='upper left')
+plt.xlabel('memory size')
+plt.ylabel('number of cards (doubles)')
 plt.show()
+plt.savefig('out.png')
