@@ -13,12 +13,13 @@ class Game:
         self.table = Table(table_size)
         self.players = [
             RandomPlayer(self.table, 'Player one random'),
-            MemoryPlayer(5, self.table, 'Player two memory'),
+            MemoryPlayer(1, self.table, 'Player two memory'),
+            MemoryPlayer(1, self.table, 'Player three memory'),
         ]
         self.counter = 1
         self.mongodb = MongoClient().pexes
 
-    def run(self, print_results=False):
+    def run(self):
         """Runs game loop as long as there are any cards on table"""
         while any(self.table.cards):
             for p in self.players:
@@ -35,7 +36,7 @@ class Game:
             'winner': self.get_winners(),
             'round': self.counter
         }
-
+        self.show_results()
         return results
 
     def get_winners(self):

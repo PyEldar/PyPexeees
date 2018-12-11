@@ -26,13 +26,7 @@ class RandomPlayer(Player):
         """Make move
         returns True on success
         """
-        first = random.randint(0, len(self.table.cards) - 1)
-        while self.table.cards[first] is None and any(self.table.cards):
-                first = random.randint(0, len(self.table.cards) - 1)
-
-        second = random.randint(0, len(self.table.cards) - 1)
-        while (self.table.cards[second] is None or first == second) and any(self.table.cards):
-                second = random.randint(0, len(self.table.cards) - 1)
+        first, second = self.choose_cards()
 
         # take cards from table
         if self.table.cards[first].id == self.table.cards[second].id:
@@ -43,6 +37,16 @@ class RandomPlayer(Player):
             return True
 
         return False
+
+    def choose_cards(self):
+        first = random.randint(0, len(self.table.cards) - 1)
+        while self.table.cards[first] is None and any(self.table.cards):
+                first = random.randint(0, len(self.table.cards) - 1)
+
+        second = random.randint(0, len(self.table.cards) - 1)
+        while (self.table.cards[second] is None or first == second) and any(self.table.cards):
+                second = random.randint(0, len(self.table.cards) - 1)
+        return first, second
 
 
 class MemoryPlayer(Player):
@@ -55,8 +59,23 @@ class MemoryPlayer(Player):
         """Make move
         when first item is in memory use stored value to get the right card
         """
+        first, second = self.choose_cards()
+        # take cards from table
+        if self.table.cards[first].id == self.table.cards[second].id:
+            self.captured_cards.append(self.table.cards[first].id)
+            self.table.cards[first] = None
+            self.table.cards[second] = None
 
+            return True
+
+        self.save_card(first, self.table.cards[first])
+        self.save_card(second, self.table.cards[second])
+
+        return False
+
+    def choose_cards(self):
         first, second = self.check_memory()
+
         # get first card which is not already taken or is not in your memory
         if first is None:
             first = random.randint(0, len(self.table.cards) - 1)
@@ -70,19 +89,7 @@ class MemoryPlayer(Player):
             second = random.randint(0, len(self.table.cards) - 1)
             while (self.table.cards[second] is None or first == second) and any(self.table.cards):
                 second = random.randint(0, len(self.table.cards) - 1)
-
-        # take cards from table
-        if self.table.cards[first].id == self.table.cards[second].id:
-            self.captured_cards.append(self.table.cards[first].id)
-            self.table.cards[first] = None
-            self.table.cards[second] = None
-
-            return True
-
-        self.save_card(first, self.table.cards[first])
-        self.save_card(second, self.table.cards[second])
-
-        return False
+        return first, second
 
     def save_card(self, position, card):
         """saves card to memory if it is not there yet"""

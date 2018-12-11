@@ -3,6 +3,7 @@ from random import shuffle
 
 from card import Card
 
+
 class Table:
     """Represents table with pairs of cards"""
     def __init__(self, size):

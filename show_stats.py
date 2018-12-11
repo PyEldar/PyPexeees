@@ -1,3 +1,4 @@
+'''Loads data from mongodb and displays them, it expects valid data format'''
 import pandas as pd
 import matplotlib.pyplot as plt
 from pymongo import MongoClient
