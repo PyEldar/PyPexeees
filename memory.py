@@ -3,7 +3,7 @@ from collections import OrderedDict
 
 
 class LimitedMemory:
-    """Class subclasses OrderedDict so its methods can be used
+    """Class internalluy uses OrderedDict and has dict-like methods
 
     methods for storing, retrieving - get(key), set(key, value)
     """
